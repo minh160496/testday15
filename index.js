@@ -79,7 +79,32 @@ biểu thị thời gian tương ứng sau n giây
  * calcTime('20:15:45', 15); // '20:16:00'
  * calcTime('20:15:45', -46); // '20:14:59'
  */
-function calcTime(time, n) {}
+
+//Ý TƯỞNG
+//B1: LẤY RA CÁC GIÁ TRỊ GIỜ PHÚT GIÂY
+//B2: XỬ LÝ (LƯU Ý MÔC 60)
+function calcTime(time, n) {
+  let gio = parseInt(time[0] + time[1]);
+  let phut = parseInt(time[3] + time[4]);
+  let giay = parseInt(time[6] + time[7]);
+  if (giay + n < 60) {
+    giay = giay + n;
+  }
+  if (giay + n >= 60) {
+    let loop = (giay + n) / 60;
+    phut = phut + Math.floor(loop);
+    giay = giay + n - 60 * Math.floor(loop);
+    if (phut >= 60) {
+      gio = gio + Math.floor(phut / 60);
+      phut = phut - 60 * Math.floor(phut / 60);
+      if (gio >= 24) {
+        gio = Math.floor(gio / 24) - 1;
+      }
+    }
+  }
+  return `${gio}:${phut}:${giay}`;
+}
+
 /**
  * Kiểm tra một chuỗi có phải đối xứng hay không (viết xuôi hay viết
 ngược đều giống nhau, không phân biệt chữ hoa chữ thường và không tính
@@ -93,6 +118,11 @@ dấu cách)
  * isPalindrome('Race car'); // true, vì Race car = racecar = racecar
  */
 
+//Ý TƯỞNG
+//B1: XÓA KHOẢNG TRẴNG, QUY VỀ CHỮ THƯỜNG
+//B2: CHUYỂN VỀ MẢNG
+//B3: TẠO MẨNG ĐẢO NGƯỢC
+//B4: SO SÁNH
 function isPalindrome(str) {
   str = str.toLowerCase();
   let arr = [];
@@ -146,7 +176,6 @@ function snail(h, x, y) {
   return test - test3;
 }
 
-console.log(snail(10, 5, 4));
 /**
  * Sắp xếp các chữ số trong một số nguyên dương bất kỳ để tạo ra số nhỏ
 nhất (giữ nguyên số chữ số ban đầu, bao gồm cả số 0)
